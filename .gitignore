@@ -10,6 +10,7 @@ public/.dev/
 
 # Dependencies
 node_modules/
+bun.lock
 
 # Logs
 *.log
