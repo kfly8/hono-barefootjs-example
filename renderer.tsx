@@ -1,5 +1,5 @@
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { raw } from 'hono/html'
+import { BfImportMap } from '@barefootjs/hono/app'
 import { BfScripts } from '@barefootjs/hono/scripts'
 import manifest from './public/components/manifest.json'
 import externals from './public/barefoot-externals.json'
@@ -19,13 +19,10 @@ export const renderer = jsxRenderer(({ children, title }) => (
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{title ?? 'Hono x BarefootJS'}</title>
       <link rel="stylesheet" href="/styles.css" />
-      {/* Browser import map for the island's bare deps: zod from a CDN
-          and @barefootjs/form bundled from source so its @barefootjs/client
-          import resolves to barefoot.js — one shared reactive runtime. */}
-      {externals.preloads.map((href) => (
-        <link rel="modulepreload" href={href} crossorigin="anonymous" />
-      ))}
-      <script type="importmap">{raw(JSON.stringify(externals.importmap))}</script>
+      {/* Import map for the island's bare deps (zod + @barefootjs/form).
+          BfImportMap merges them with @barefootjs/client → barefoot.js
+          and emits the modulepreload hints. */}
+      <BfImportMap base={componentsBase} externals={externals} />
     </head>
     <body>
       {children}

@@ -41,11 +41,11 @@ export function UserForm(props: UserFormProps) {
           id="name"
           name="name"
           type="text"
-          value={/* @client */ name.value()}
+          value={name.value()}
           onInput={name.handleInput}
           onBlur={name.handleBlur}
         />
-        {/* @client */ name.error() && <p className="error">{name.error()}</p>}
+        {name.error() && <p className="error">{name.error()}</p>}
       </div>
       <div>
         <label for="email">Email</label>
@@ -53,24 +53,24 @@ export function UserForm(props: UserFormProps) {
           id="email"
           name="email"
           type="email"
-          value={/* @client */ email.value()}
+          value={email.value()}
           onInput={email.handleInput}
           onBlur={email.handleBlur}
         />
-        {/* @client */ email.error() && <p className="error">{email.error()}</p>}
+        {email.error() && <p className="error">{email.error()}</p>}
       </div>
       <div>
         <label for="bio">Bio</label>
         <textarea
           id="bio"
           name="bio"
-          value={/* @client */ bio.value()}
+          value={bio.value()}
           onInput={bio.handleInput}
           onBlur={bio.handleBlur}
         />
-        {/* @client */ bio.error() && <p className="error">{bio.error()}</p>}
+        {bio.error() && <p className="error">{bio.error()}</p>}
       </div>
-      <button type="submit" disabled={/* @client */ form.isSubmitting()}>Create</button>
+      <button type="submit" disabled={form.isSubmitting()}>Create</button>
     </form>
   )
 }

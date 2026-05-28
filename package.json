@@ -10,18 +10,18 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@barefootjs/client": "latest",
-    "@barefootjs/form": "^0.2.0",
-    "@barefootjs/hono": "latest",
-    "@barefootjs/jsx": "latest",
-    "@barefootjs/shared": "latest",
+    "@barefootjs/client": "0.3.0",
+    "@barefootjs/form": "0.3.0",
+    "@barefootjs/hono": "0.3.0",
+    "@barefootjs/jsx": "0.3.0",
+    "@barefootjs/shared": "0.3.0",
     "@hono/zod-validator": "^0.8.0",
     "hono": "^4.6.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@barefootjs/cli": "latest",
-    "@barefootjs/test": "latest",
+    "@barefootjs/cli": "0.3.0",
+    "@barefootjs/test": "0.3.0",
     "@cloudflare/workers-types": "^4.20250101.0",
     "@types/bun": "^1.1.0",
     "concurrently": "^9.0.0",
