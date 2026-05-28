@@ -22,3 +22,6 @@ bun run dev
 bun run deploy
 ```
 
+## See Also
+
+This project is inspired by https://github.com/yusukebe/hono-inertia-example
