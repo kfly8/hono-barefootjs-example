@@ -1,0 +1,12 @@
+# Workers Assets uploads everything under this directory. The files below are
+# bf build internals or server-side imports (bundled into the Worker at build
+# time), so they must NOT ship as public assets. Only the browser-facing
+# *.client.js, barefoot.js, form.js and *.css are served.
+#
+# Uses .gitignore syntax (https://developers.cloudflare.com/workers/static-assets/).
+.dev/
+.bfemit.json
+.buildcache.json
+barefoot-externals.json
+components/manifest.json
+*.tsx
