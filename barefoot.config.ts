@@ -11,13 +11,14 @@ export default createConfig({
     clientJsBasePath: '/components/',
     barefootJsPath: '/components/barefoot.js',
   },
-  // @barefootjs/form's published dist bundles its own copy of the
-  // @barefootjs/client runtime, which would NOT share barefoot.js's
-  // reactive graph in the browser (signals created inside the form
-  // wouldn't be tracked by the island's effects). Re-bundle it from
-  // source instead: bundleEntries keeps @barefootjs/client external
-  // (auto-added to every bundle's externals), so the importmap below
-  // resolves it to barefoot.js — one shared runtime.
+  // WORKAROUND (pending an upstream @barefootjs/form build fix):
+  // its published dist bundles the @barefootjs/client peer dep instead of
+  // leaving it external, so loading dist as-is would give the form its own
+  // reactive runtime — separate from barefoot.js — and bindings wouldn't
+  // update. Until the package externalizes its peers, we re-bundle it from
+  // source here; bundleEntries auto-externalizes @barefootjs/client, so the
+  // importmap resolves it to barefoot.js (one shared runtime). Once fixed,
+  // this entry can go away and @barefootjs/form moves into `externals`.
   bundleEntries: [
     { entry: 'node_modules/@barefootjs/form/src/index.ts', outfile: 'form.js' },
   ],

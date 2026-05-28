@@ -29,33 +29,13 @@ app.get('/users/:id{[0-9]+}', (c) => {
   return c.render(<UsersShow user={user} />, { title: user.name })
 })
 
-app.post(
-  '/users',
-  // Server-side validation is the security backstop: the client form
-  // (@barefootjs/form) validates with the same schema before submitting,
-  // so this branch is only reached if the client is bypassed. On failure
-  // we re-render New with the submitted values (no 303), keeping invalid
-  // data out of the store.
-  zValidator('form', userSchema, (result, c) => {
-    if (!result.success) {
-      const raw = (result as { data?: Record<string, unknown> }).data ?? {}
-      return c.render(
-        <UsersNew
-          values={{
-            name: typeof raw.name === 'string' ? raw.name : '',
-            email: typeof raw.email === 'string' ? raw.email : '',
-            bio: typeof raw.bio === 'string' ? raw.bio : '',
-          }}
-        />,
-        { title: 'New user' },
-      )
-    }
-  }),
-  (c) => {
-    const input = c.req.valid('form')
-    const user = createUser(input)
-    return c.redirect(`/users/${user.id}`, 303)
-  },
-)
+// Defense-in-depth: the client form (@barefootjs/form) validates with the
+// same schema before submitting, so this only rejects crafted requests that
+// bypass it. Bare zValidator answers invalid input with a 400 by default.
+app.post('/users', zValidator('form', userSchema), (c) => {
+  const input = c.req.valid('form')
+  const user = createUser(input)
+  return c.redirect(`/users/${user.id}`, 303)
+})
 
 export default app

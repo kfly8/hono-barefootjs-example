@@ -3,6 +3,7 @@ public/components/
 public/.buildcache.json
 public/.bfemit.json
 public/barefoot-externals.json
+public/.dev/
 
 # Wrangler local state (dev session, worker logs)
 .wrangler/
