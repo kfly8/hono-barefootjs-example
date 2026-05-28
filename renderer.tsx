@@ -1,7 +1,8 @@
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { BfImportMap } from '@barefootjs/hono/app'
+import { raw } from 'hono/html'
 import { BfScripts } from '@barefootjs/hono/scripts'
 import manifest from './public/components/manifest.json'
+import externals from './public/barefoot-externals.json'
 
 declare module 'hono' {
   interface ContextRenderer {
@@ -16,16 +17,15 @@ export const renderer = jsxRenderer(({ children, title }) => (
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>{title ?? 'BarefootJS app'}</title>
-      {/* Link all three sheets so the browser fetches them in
-          parallel — chaining via styles.css @import would defer
-          tokens/uno to a second round-trip and flash unstyled DOM.
-          tokens.css first so CSS variables are defined before any
-          rule references them. */}
-      <link rel="stylesheet" href="/tokens.css" />
+      <title>{title ?? 'Hono x BarefootJS'}</title>
       <link rel="stylesheet" href="/styles.css" />
-      <link rel="stylesheet" href="/uno.css" />
-      <BfImportMap base={componentsBase} />
+      {/* Browser import map for the island's bare deps: zod from a CDN
+          and @barefootjs/form bundled from source so its @barefootjs/client
+          import resolves to barefoot.js — one shared reactive runtime. */}
+      {externals.preloads.map((href) => (
+        <link rel="modulepreload" href={href} crossorigin="anonymous" />
+      ))}
+      <script type="importmap">{raw(JSON.stringify(externals.importmap))}</script>
     </head>
     <body>
       {children}

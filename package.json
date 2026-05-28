@@ -3,28 +3,28 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n build,uno,server -c blue,magenta,green \"bf build --watch\" \"unocss --watch\" \"bunx wrangler dev --live-reload\"",
-    "build": "bf build && unocss",
-    "deploy": "bf build && unocss && bunx wrangler deploy",
-    "watch": "concurrently -k -n build,uno -c blue,magenta \"bf build --watch\" \"unocss --watch\"",
+    "dev": "concurrently -k -n build,server -c blue,green \"bf build --watch\" \"bunx wrangler dev --live-reload\"",
+    "build": "bf build",
+    "deploy": "bf build && bunx wrangler deploy",
+    "watch": "bf build --watch",
     "test": "bun test"
   },
   "dependencies": {
     "@barefootjs/client": "latest",
+    "@barefootjs/form": "^0.2.0",
     "@barefootjs/hono": "latest",
     "@barefootjs/jsx": "latest",
     "@barefootjs/shared": "latest",
-    "hono": "^4.6.0"
+    "@hono/zod-validator": "^0.8.0",
+    "hono": "^4.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@unocss/cli": "^66.0.0",
-    "@unocss/preset-wind4": "^66.0.0",
-    "unocss": "^66.0.0",
     "@barefootjs/cli": "latest",
-    "@cloudflare/workers-types": "^4.20250101.0",
     "@barefootjs/test": "latest",
+    "@cloudflare/workers-types": "^4.20250101.0",
+    "@types/bun": "^1.1.0",
     "concurrently": "^9.0.0",
-    "typescript": "^5.6.0",
-    "@types/bun": "^1.1.0"
+    "typescript": "^5.6.0"
   }
 }
